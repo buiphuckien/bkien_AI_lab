@@ -23,9 +23,6 @@ def predict():
         return render_template('predict.html', pred=pred)
     else:
         return render_template('predict.html', pred='None')
-    
-if __name__=='__main__':
-    app.run(debug=True)
 
 
         
