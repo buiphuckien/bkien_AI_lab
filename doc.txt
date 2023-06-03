@@ -1,0 +1,31 @@
+required files: 
+        - Procfile:
+            + "web: gunicorn wsgi:app"
+            + can add more
+        - requirements.txt
+            + have to install all necessary packages 
+            + use: "python3 -m pip freeze > requirements.txt" to collect
+        - use .gitignore file to prevent putting unnecessary files to github
+        - runtime.txt --> for runtime environment
+
+1. Build and train model
+2. Using joblib to store model
+3. Load model to the app
+
+heroku commands:
+        - heroku login
+        - heroku logs --tail   -> to log the errors
+        - heroku ps:scale web=1 -> scale the dynos
+        - git commit --allow-empty -m "Adjust buildpacks on Heroku"
+        - heroku buildpacks:clear
+        - heroku buildpacks:add --index heroku/python
+        - heroku create <appname>
+        - git push heroku master
+
+git commands:
+        - git init
+        - git remote add origin url
+        - git add <files>
+        - git commit <files>
+        - git push -u origin master
+        
