@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <title>Deploy machine learning model with flask</title>
+    <title>ML model</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -10,9 +10,12 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   </head>
   <body>
-      <form action="/predict" method="POST">
+      <form action="/predict" method="POST" enctype=multipart/form-data>
         <input type="text" name="a"> <br>
         <input type="text" name="b"> <br>
+        <input type="file" name="file1" label="file1">
+        <input type="file" name="file2" label="file2">
+        <input type="file" name="file3" label="file3">
         <input type="submit" name="submit">
       </form>
     <!-- Optional JavaScript -->

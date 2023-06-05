@@ -6,16 +6,21 @@ from werkzeug.utils import secure_filename
 import numpy as np
 # import sklearn
 import joblib
-
+from PIL import Image
+from dnn_app_utils_v3 import predict, L_model_forward
 app = Flask(__name__)
 
-@app.route('/') # to homepage
-def home():
-    return render_template('home.html')
+# @app.route('/') # to homepage
+# def home():
+#     return render_template('home.html')
 
 @app.route('/predict', methods=['GET', 'POST'])
 def predict():
+    print(request)
     if request.method == 'POST': # If there is post
+        # print(dir(request))
+        # print(request.form) # to get data from a from
+        # print(request.files) # to get all files from user upload 
         a = float(request.form['a'])
         b = float(request.form['b'])
         test = np.array([a, b]) # shape = (2,)
@@ -39,8 +44,9 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-@app.route('/upload', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
 def upload_file():
+    print(request.files)
     if request.method == 'POST':
         # check if the post request has the file part
         if 'file' not in request.files:
@@ -54,13 +60,51 @@ def upload_file():
             return redirect(request.url)
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            return redirect(url_for('uploaded_file',
-                                    filename=filename))
+
+            image = np.array(Image.open(file).resize((64, 64)))
+
+            image = image / 255.
+            image = image.reshape((1, 64 * 64 * 3)).T
+            print(image)
+            my_label_y = [1]
+
+
+
+            with open('parameters.pkl', 'rb') as f:
+                parameters = joblib.load(f) # Load the dictionary for reuse
+
+
+            p, _ = L_model_forward(image, parameters)
+            print('p ===== ', p)
+
+
+            p = np.squeeze(p)
+
+            if p > 0.8:
+                pred = "This image is definately cat"
+            elif p > 0.5:
+                pred = "This image is likely to be cat"
+            else:
+                pred = "This image is maybe not a cat"
+            
+            # my_predicted_image = predict(image, my_label_y, parameters)
+
+
+            # print ("y = " + str(np.squeeze(my_predicted_image)) + ", your L-layer model predicts a \"" + str(int(np.squeeze(my_predicted_image))) +  "\" picture.")
+
+
+
+            # file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            
+
+            return render_template('predict.html', pred=pred)
+
+            # return redirect(url_for('upload_file',
+            #                         filename=filename))
     return '''
     <!doctype html>
-    <title>Upload new File</title>
-    <h1>Upload new File</h1>
+    <title>cat vs noncat</title>
+    <h1>Upload an image</h1>
     <form method=post enctype=multipart/form-data>
       <input type=file name=file>
       <input type=submit value=Upload>
