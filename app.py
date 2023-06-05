@@ -78,14 +78,9 @@ def upload_file():
             print('p ===== ', p)
 
 
-            p = np.squeeze(p)
+            p = round(np.squeeze(p)*100, 2)
 
-            if p > 0.8:
-                pred = "This image is definately cat"
-            elif p > 0.5:
-                pred = "This image is likely to be cat"
-            else:
-                pred = "This image is maybe not a cat"
+            
             
             # my_predicted_image = predict(image, my_label_y, parameters)
 
@@ -97,7 +92,7 @@ def upload_file():
             # file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             
 
-            return render_template('predict.html', pred=pred)
+            return render_template('predict.html', pred=p)
 
             # return redirect(url_for('upload_file',
             #                         filename=filename))
