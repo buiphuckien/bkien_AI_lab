@@ -10,9 +10,9 @@ from PIL import Image
 from dnn_app_utils_v3 import predict, L_model_forward
 app = Flask(__name__)
 
-# @app.route('/') # to homepage
-# def home():
-#     return render_template('home.html')
+@app.route('/') # to homepage
+def home():
+    return render_template('home.html')
 
 @app.route('/predict', methods=['GET', 'POST'])
 def predict():
@@ -28,9 +28,9 @@ def predict():
         model = open('lr_model.pkl', 'rb') # open the model
         lr_model = joblib.load(model) # load model
         pred  = lr_model.predict(test)
-        return render_template('predict.html', pred=pred)
+        return render_template('predict_lr.html', pred=pred)
     else:
-        return render_template('predict.html', pred='None')
+        return render_template('predict_lr.html', pred='None')
 
 
 
@@ -44,7 +44,7 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/upload', methods=['GET', 'POST'])
 def upload_file():
     print(request.files)
     if request.method == 'POST':
@@ -65,7 +65,7 @@ def upload_file():
 
             image = image / 255.
             image = image.reshape((1, 64 * 64 * 3)).T
-            print(image)
+            # print(image)
             my_label_y = [1]
 
 

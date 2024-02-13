@@ -10,13 +10,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   </head>
   <body>
-      {%if pred > 80 %}
-        Probability = {{pred}}%: this is <b>definately a cat</b> image.
-      {%elif pred > 50%}
-        Probability = {{pred}}%: this is <b>likely a cat</b> image
-      {%else%}
-        Probability = {{pred}}%: this is probably <b>not a cat</b> image.
-      {%endif %}
+      Predict from linear regression p = {{ pred }}
       <a href={{ url_for('home') }}>Home</a>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
