@@ -10,9 +10,21 @@ from PIL import Image
 from dnn_app_utils_v3 import predict, L_model_forward
 app = Flask(__name__)
 
-@app.route('/') # to homepage
+@app.route('/') # to index page
 def home():
-    return render_template('home.html')
+    return render_template('index.html')
+
+@app.route('/about') # to about
+def about():
+    return render_template('about.html')
+
+@app.route('/contact') # to contact
+def contact():
+    return render_template('contact.html')
+
+@app.route('/post') # to post
+def post():
+    return render_template('post.html')
 
 @app.route('/predict', methods=['GET', 'POST'])
 def predict():
