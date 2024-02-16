@@ -3,11 +3,11 @@ from flask import Flask, flash, request, redirect, url_for, render_template
 from werkzeug.utils import secure_filename
 
 # import pandas as pd
-import numpy as np
+# import numpy as np
 # import sklearn
-import joblib
-from PIL import Image
-from dnn_app_utils_v3 import predict, L_model_forward
+# import joblib
+# from PIL import Image
+# from dnn_app_utils_v3 import predict, L_model_forward
 app = Flask(__name__)
 
 @app.route('/') # to index page
