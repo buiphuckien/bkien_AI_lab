@@ -26,6 +26,10 @@ def contact():
 def post():
     return render_template('post.html')
 
+@app.route('/math') # to math
+def math():
+    return render_template('math.html')
+
 @app.route('/predict', methods=['GET', 'POST'])
 def predict():
     print(request)
