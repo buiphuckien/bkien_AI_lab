@@ -2,12 +2,12 @@ import os
 from flask import Flask, flash, request, redirect, url_for, render_template
 from werkzeug.utils import secure_filename
 
-# import pandas as pd
-# import numpy as np
-# import sklearn
-# import joblib
-# from PIL import Image
-# from dnn_app_utils_v3 import predict, L_model_forward
+import pandas as pd
+import numpy as np
+import sklearn
+import joblib
+from PIL import Image
+from dnn_app_utils_v3 import predict, L_model_forward
 app = Flask(__name__)
 
 @app.route('/') # to index page
@@ -30,23 +30,32 @@ def post():
 def math():
     return render_template('math.html')
 
-@app.route('/predict', methods=['GET', 'POST'])
-def predict():
-    print(request)
+@app.route('/predict_lr', methods=['GET', 'POST'])
+def predict_lr():
+    # print(request)
     if request.method == 'POST': # If there is post
-        # print(dir(request))
-        # print(request.form) # to get data from a from
-        # print(request.files) # to get all files from user upload 
-        a = float(request.form['a'])
+
+        # Get values from form
+        a = float(request.form['a']) 
         b = float(request.form['b'])
+
+        # Putting a, b into an array
         test = np.array([a, b]) # shape = (2,)
         test = test.reshape(1, -1) # shape = (1, 2)
+
+        # Loading the model
         model = open('lr_model.pkl', 'rb') # open the model
         lr_model = joblib.load(model) # load model
+
+        # Make a prediction
         pred  = lr_model.predict(test)
+        pred = pred.item() # Just
+
+        # Give answer to a prediction
         return render_template('predict_lr.html', pred=pred)
+    
     else:
-        return render_template('predict_lr.html', pred='None')
+        return render_template('predict_lr.html')
 
 
 
