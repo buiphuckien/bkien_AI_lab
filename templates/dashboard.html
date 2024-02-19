@@ -1,0 +1,37 @@
+{% extends "base.html"%}
+
+<!-- title -->
+{% block title %}Dashboard{% endblock %}
+
+<!-- Main Content-->
+{% block maincontent %}
+    <h3>Dashboard</h3>
+        <div id="chart1"></div>
+        <div >
+            <p>
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ducimus facilis possimus, provident natus nobis optio praesentium maiores quia unde consectetur debitis ab totam. Iusto cumque impedit eum architecto aliquid labore.
+            </p>
+        </div>
+
+        <div id="chart2"></div>
+        <p>
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ducimus facilis possimus, provident natus nobis optio praesentium maiores quia unde consectetur debitis ab totam. Iusto cumque impedit eum architecto aliquid labore.
+        </p>
+        <div  class="container" id="chart3"></div>
+
+    
+    <script src="https://cdn.plot.ly/plotly-latest.min.js" charset="utf-8"></script>
+
+
+    <script>
+        var graph1 = {{ graph1JSON | safe}}
+        Plotly.plot("chart1", graph1, {})
+
+        var graph2 = {{ graph2JSON | safe}}
+        Plotly.plot("chart2", graph2, {})
+
+        var graph3 = {{ graph3JSON | safe}}
+        Plotly.plot("chart3", graph3, {})
+    </script>
+
+{% endblock %}

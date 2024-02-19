@@ -1,5 +1,10 @@
 {% extends "base.html" %}
 
+<!-- import bootstrap -->
+{% import "bootstrap/wtf.html" as wtf %}
+
+
+
 <!-- title -->
 {% block title %}Linear regression{% endblock %}
 
@@ -31,15 +36,8 @@
         <div class="container px-4 px-lg-5">
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-md-10 col-lg-8 col-xl-7">
-                  <form action="/predict_lr" method="POST" enctype=multipart/form-data>
-                    <input type="text" name="a" label="a"> a <br>
-                    <input type="text" name="b" label="b"> b <br>
-                    <!-- <input type="file" name="file1" label="file1">
-                    <input type="file" name="file2" label="file2">
-                    <input type="file" name="file3" label="file3"> -->
-                    <input type="submit" name="submit">
-                  </form>
-              
+                  {{ wtf.quick_form(form) }}
+                    
                   {% if pred %}
                     Predict from linear regression p = {{ pred | round(2) }}
                   {% endif %}
